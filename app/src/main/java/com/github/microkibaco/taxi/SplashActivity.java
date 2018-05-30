@@ -22,7 +22,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            final AnimatedVectorDrawable anim = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.anim);
+            final AnimatedVectorDrawable anim = (AnimatedVectorDrawable) getResources()
+                    .getDrawable(R.drawable.anim);
             mLogo.setImageDrawable(anim);
             anim.start();
         }
