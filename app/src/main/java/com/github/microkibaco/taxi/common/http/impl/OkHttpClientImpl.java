@@ -7,8 +7,10 @@ import com.github.microkibaco.taxi.common.http.IResponse;
 import java.io.IOException;
 import java.util.Map;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class OkHttpClientImpl implements IHttpClient {
@@ -18,15 +20,16 @@ public class OkHttpClientImpl implements IHttpClient {
 
     @Override
     public IResponse get(IRequest request, boolean forceCache) {
+        request.setMethod(IRequest.GET);
         final Map<String, String> header = request.getHeader(); // 解析头部
         // OkHttp 的 Request.Builder
-        Request.Builder builder = new Request.Builder();
+        final Request.Builder builder = new Request.Builder();
         for (String key : header.keySet()) {
             // 组装成 OkHttp 的 Header
             builder.header(key, header.get(key));
         }
         // 获取 url
-        String url = request.getUrl();
+        final String url = request.getUrl();
         builder.url(url)
                 .get();
         final Request oKRequest = builder.build();
@@ -58,6 +61,19 @@ public class OkHttpClientImpl implements IHttpClient {
 
     @Override
     public IResponse post(IRequest request, boolean forceCache) {
-        return null;
+
+        // 指定请求方式
+        request.setMethod(IRequest.POST);
+        final MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        final RequestBody body = RequestBody.create(mediaType, request.getBody().toString());
+        final Map<String, String> header = request.getHeader();
+        final Request.Builder builder = new Request.Builder();
+        for (String key : header.keySet()) {
+            builder.header(key, header.get(key));
+        }
+        builder.url(request.getUrl())
+                .post(body);
+        final Request oKRequest = builder.build();
+        return execute(oKRequest);
     }
 }

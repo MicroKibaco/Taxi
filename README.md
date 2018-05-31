@@ -7,7 +7,7 @@ SVG 有何优点?
 
 - SVG 与 JPEG 和 GIF 图像比起来,尺寸更小,可压缩性更强
 
-   ![LOGO](./doc/icon_logo.png) 
+ <img src="./doc/icon_logo.png" width="40" height="40" />
    
 ### B. SVG 制造logo
 - M = moveTo (M X,Y) : 将画笔移动到指定的坐标位置
@@ -36,6 +36,16 @@ SVG 有何优点?
 统计请求花费的时间和日志,拦截器是一种面向切面 IOP的思想
 ```
 - 缓存
+
+
+## 章节六: 基础网络模块—架构实现及OkHttp封装
+ - 关系图
+ 
+ <img src="./doc/net-relation.png" width="200" height="100" />
+ 
+ - 怎么做封装?
+ 
+ <img src="./doc/baseOkHttp.png" width="200" height="100" />
 
 
 
