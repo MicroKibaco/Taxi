@@ -1,11 +1,8 @@
 package com.github.microkibaco.taxi;
 
-
 import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
-
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
