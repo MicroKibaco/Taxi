@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.github.microkibaco.taxi.SplashActivity">
+        tools:context="com.github.microkibaco.taxi.splash.SplashActivity">
 
     <android.support.v7.widget.LinearLayoutCompat
             android:layout_centerInParent="true"
