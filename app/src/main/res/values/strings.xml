@@ -63,5 +63,6 @@
     <string name="driver_accept_order">司机接单了</string>
     <string name="paying">支付中...</string>
     <string name="pay_fail">支付失败</string>
+    <string name="_86">+86</string>
 
 </resources>

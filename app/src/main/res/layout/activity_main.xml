@@ -1,7 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <!--地图容器-->
+    <android.support.v7.widget.ContentFrameLayout
+            android:id="@+id/map_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    <!--标题栏-->
+    <RelativeLayout
+            android:id="@+id/top"
+            android:background="@color/bg_white"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
 
-</LinearLayout>
+        <android.support.v7.widget.AppCompatImageView
+                android:layout_marginLeft="16dp"
+                android:id="@+id/im_user"
+                android:layout_centerVertical="true"
+                android:src="@drawable/user"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+                android:textColor="@color/color_text_normal"
+                android:text="@string/locating"
+                android:textSize="@dimen/text_size_normal"
+                android:layout_centerInParent="true"
+                android:id="@+id/city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <!-- 起点终点选择-->
+    <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/select_area"
+            android:background="@color/bg_white"
+            android:padding="12dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatTextView
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/text_size_normal"
+                    android:text="@string/start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <android.support.v7.widget.AppCompatAutoCompleteTextView
+                    android:textSize="@dimen/text_size_normal"
+                    android:padding="12dp"
+                    android:textColor="@color/color_text_normal"
+                    android:id="@+id/start"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+        </android.support.v7.widget.LinearLayoutCompat>
+
+
+        <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/end"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/color_text_normal"
+                    />
+            <android.support.v7.widget.AppCompatAutoCompleteTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/end"
+                    android:hint="@string/where_are_you_go"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColorHint="@color/color_dark_gray"
+                    android:textColor="@color/color_text_normal"
+                    />
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <!--  操作区 -->
+        <android.support.v7.widget.LinearLayoutCompat
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:background="@color/bg_white"
+                android:padding="12dp"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/optArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <!-- 状态提示区 -->
+
+            <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatTextView
+                        android:textColor="@color/color_text_normal"
+                        android:visibility="gone"
+                        android:id="@+id/tips_info"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="@dimen/text_size_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <android.support.v7.widget.LinearLayoutCompat
+                        android:visibility="gone"
+                        android:id="@+id/loading_area"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <android.support.v4.widget.ContentLoadingProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                            android:gravity="center_vertical"
+                            android:textColor="@color/color_text_normal"
+                            android:id="@+id/loading_text"
+                            android:text="@string/calling_driver"
+                            android:textSize="@dimen/text_size_normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                </android.support.v7.widget.LinearLayoutCompat>
+            </android.support.v7.widget.LinearLayoutCompat>
+            <!-- 操作按钮 -->
+            <android.support.v7.widget.LinearLayoutCompat
+                    android:padding="@dimen/activity_vertical_margin"
+                    android:weightSum="2"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <android.support.v7.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Dialog.Button"
+                        android:text="@string/call"
+                        android:layout_margin="2dp"
+                        android:layout_weight="1"
+                        android:id="@+id/btn_call_driver"
+                        />
+
+                <android.support.v7.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Dialog.Button"
+                        android:text="@string/cancel"
+                        android:layout_margin="2dp"
+                        android:layout_weight="1"
+                        android:id="@+id/btn_cancel"
+                        />
+                <android.support.v7.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Dialog.Button"
+                        android:text="@string/pay"
+                        android:id="@+id/btn_pay"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        />
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</RelativeLayout>

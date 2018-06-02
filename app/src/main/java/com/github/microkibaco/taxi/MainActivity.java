@@ -3,6 +3,18 @@ package com.github.microkibaco.taxi;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.ContentFrameLayout;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.view.View;
+import android.widget.RelativeLayout;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 1. 检查本地记录(登录状态检查)
@@ -12,10 +24,42 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class MainActivity extends AppCompatActivity {
 
+    @Bind(R.id.map_container)
+    ContentFrameLayout mMapContainer;
+    @Bind(R.id.im_user)
+    AppCompatImageView mImUser;
+    @Bind(R.id.city)
+    AppCompatTextView mCity;
+    @Bind(R.id.top)
+    RelativeLayout mTop;
+    @Bind(R.id.start)
+    AppCompatAutoCompleteTextView mStart;
+    @Bind(R.id.end)
+    AppCompatAutoCompleteTextView mEnd;
+    @Bind(R.id.tips_info)
+    AppCompatTextView mTipsInfo;
+    @Bind(R.id.loading_text)
+    AppCompatTextView mLoadingText;
+    @Bind(R.id.loading_area)
+    LinearLayoutCompat mLoadingArea;
+    @Bind(R.id.btn_call_driver)
+    AppCompatButton mBtnCallDriver;
+    @Bind(R.id.btn_cancel)
+    AppCompatButton mBtnCancel;
+    @Bind(R.id.btn_pay)
+    AppCompatButton mBtnPay;
+    @Bind(R.id.optArea)
+    LinearLayoutCompat mOptArea;
+    @Bind(R.id.select_area)
+    LinearLayoutCompat mSelectArea;
+    @Bind(R.id.activity_main)
+    RelativeLayout mActivityMain;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         checkLoginState();
     }
 
@@ -49,5 +93,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showPhoneInputDialog() {
 
+    }
+
+    @OnClick({R.id.start, R.id.end, R.id.btn_call_driver, R.id.btn_cancel, R.id.btn_pay})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.start:
+                break;
+            case R.id.end:
+                break;
+            case R.id.btn_call_driver:
+                break;
+            case R.id.btn_cancel:
+                break;
+            case R.id.btn_pay:
+                break;
+        }
     }
 }

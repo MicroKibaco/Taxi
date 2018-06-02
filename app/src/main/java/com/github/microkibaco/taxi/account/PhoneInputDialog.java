@@ -2,6 +2,7 @@ package com.github.microkibaco.taxi.account;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.github.microkibaco.taxi.MainActivity;
 import com.github.microkibaco.taxi.R;
 import com.github.microkibaco.taxi.common.util.FormatUtil;
 
@@ -36,6 +38,11 @@ public class PhoneInputDialog extends Dialog implements TextWatcher {
     @Bind(R.id.btn_next)
     AppCompatButton mButton;
     private View mRoot;
+    private MainActivity mainActivity;
+    public PhoneInputDialog(MainActivity mainActivity) {
+        this(mainActivity, R.style.Dialog);
+        this.mainActivity = mainActivity;
+    }
 
     public PhoneInputDialog(@NonNull Context context) {
         this(context, R.style.Dialog);
@@ -73,6 +80,15 @@ public class PhoneInputDialog extends Dialog implements TextWatcher {
             case R.id.phone:
                 break;
             case R.id.btn_next:
+                String phone =  mPhone.getText().toString();
+                SmsCodeDialog dialog = new SmsCodeDialog(mainActivity, phone);
+                dialog.show();
+                dialog.setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        PhoneInputDialog.this.dismiss();
+                    }
+                });
                 break;
         }
     }
