@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.dalimao.corelibrary.VerificationCodeInput;
-import com.github.microkibaco.taxi.MainActivity;
+import com.github.microkibaco.taxi.main.MainActivity;
 import com.github.microkibaco.taxi.R;
 
 import butterknife.Bind;

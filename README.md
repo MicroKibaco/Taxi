@@ -52,6 +52,16 @@ SVG 有何优点?
 - 封装一个App 网络库的方法(分层思想)
 
 ## 章节四: 用户登录模块
- <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/login.png" width="150" height="600" />
+ <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/login.png" width="300" height="600" />
+
+## 章节五: MVP架构实现以及优化实现
+ <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/mvp.png" width="600" height="300" />
+
+- 定义 MVP 各层接口
+- 抽离网络请求数据存储过程, 实现 M 层
+- 整理 View 层,形成被动视图, 实现 P 层
+
+### MVC , MVP ,MVVM 架构对比
+ <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/mvc-mvp-mvvm.png" width="600" height="300" />
 
 

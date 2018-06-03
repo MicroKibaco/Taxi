@@ -9,7 +9,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 
-import com.github.microkibaco.taxi.MainActivity;
+import com.github.microkibaco.taxi.main.MainActivity;
 import com.github.microkibaco.taxi.R;
 
 import butterknife.Bind;
@@ -40,6 +40,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                finish();
             }
         }, 3000);
     }

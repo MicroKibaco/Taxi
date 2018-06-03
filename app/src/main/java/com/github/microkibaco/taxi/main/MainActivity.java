@@ -1,4 +1,4 @@
-package com.github.microkibaco.taxi;
+package com.github.microkibaco.taxi.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,9 @@ import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.RelativeLayout;
+
+import com.github.microkibaco.taxi.R;
+import com.github.microkibaco.taxi.account.PhoneInputDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -92,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
      * 显示手机输入框
      */
     private void showPhoneInputDialog() {
-
+        PhoneInputDialog dialog = new PhoneInputDialog(this);
+        dialog.show();
     }
 
     @OnClick({R.id.start, R.id.end, R.id.btn_call_driver, R.id.btn_cancel, R.id.btn_pay})

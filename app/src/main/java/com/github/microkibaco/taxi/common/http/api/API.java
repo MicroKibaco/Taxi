@@ -1,5 +1,8 @@
 package com.github.microkibaco.taxi.common.http.api;
 
+/**
+ * https://www.easyapi.com/api/?documentId=8067&themeId=&categoryId=13213
+ */
 public class API {
 
     public static final String TEST_GET = "/get?uid=${uid}";
