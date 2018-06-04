@@ -1,4 +1,4 @@
-package com.github.microkibaco.taxi.account;
+package com.github.microkibaco.taxi.account.view;
 
 public interface ISmsCodeDialogView extends IView {
     /**

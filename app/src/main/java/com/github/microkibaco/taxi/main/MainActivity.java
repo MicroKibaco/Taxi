@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.github.microkibaco.taxi.R;
-import com.github.microkibaco.taxi.account.PhoneInputDialog;
+import com.github.microkibaco.taxi.account.view.PhoneInputDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
