@@ -12,9 +12,9 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
- public class RxBus {
+public class RxBus {
 
-    private static final String TAG = "RxBus";
+    private static final String TAG = RxBus.class.getSimpleName();
     private static volatile RxBus instance;
 
     // 订阅者集合
