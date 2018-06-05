@@ -21,11 +21,14 @@ import com.github.microkibaco.taxi.account.presenter.ISmsCodeDialogPresenter;
 import com.github.microkibaco.taxi.account.presenter.impl.SmsCodeDialogPresenterImpl;
 import com.github.microkibaco.taxi.account.view.ISmsCodeDialogView;
 import com.github.microkibaco.taxi.common.databus.RxBus;
+import com.github.microkibaco.taxi.common.util.LogUtil;
 import com.github.microkibaco.taxi.common.util.ToastUtil;
 import com.github.microkibaco.taxi.main.view.MainActivity;
 
 
-public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.OnClickListener, VerificationCodeInput.Listener {
+public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView,
+        View.OnClickListener, VerificationCodeInput.Listener {
+
     private static final String TAG = SmsCodeDialog.class.getSimpleName();
 
     private String mPhone;
@@ -38,6 +41,23 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
 
     private ISmsCodeDialogPresenter mPresenter;
     private MainActivity mainActivity;
+
+    private CountDownTimer mCountDownTimer = new CountDownTimer(60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            mBtnResend.setEnabled(false);
+            mBtnResend.setText(String.format(getContext()
+                    .getString(R.string.after_time_resend,
+                            millisUntilFinished / 1000)));
+        }
+
+        @Override
+        public void onFinish() {
+            mBtnResend.setEnabled(true);
+            mBtnResend.setText(getContext().getString(R.string.resend));
+            cancel();
+        }
+    };
 
     SmsCodeDialog(MainActivity context, String phone) {
         this(context, R.style.Dialog);
@@ -65,6 +85,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mCountDownTimer.cancel();
+        LogUtil.e(TAG, "onDetachedFromWindow");
     }
 
     private void initListener() {
@@ -104,6 +125,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
     @Override
     public void showLoading() {
         mLoading.setVisibility(View.VISIBLE);
+        LogUtil.e(TAG, "showLoading");
     }
 
     @Override
@@ -113,7 +135,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
 
             case IAccountManager.SMS_SEND_FAIL:
                 ToastUtil.show(getContext(),
-                        getContext().getString(R.string.sms_send_fail));
+                        TAG + getContext().getString(R.string.sms_send_fail));
                 break;
 
             case IAccountManager.SMS_CHECK_FAIL:
@@ -124,7 +146,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
 
             case IAccountManager.SERVER_FAIL:
                 ToastUtil.show(getContext(),
-                        getContext().getString(R.string.error_server));
+                        TAG + getContext().getString(R.string.error_server));
                 break;
 
 
@@ -137,6 +159,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
                 .getString(R.string.sms_code_send_phone), mPhone));
         mCountDownTimer.start();
         mBtnResend.setEnabled(false);
+        LogUtil.e(TAG, "showCountDownTimer");
     }
 
     @Override
@@ -151,6 +174,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
             mVerificationCodeInput.setEnabled(true);
             mLoading.setVisibility(View.GONE);
         }
+        LogUtil.e(TAG, "showSmsCodeCheckState");
     }
 
     @Override
@@ -182,6 +206,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
                 }
             });
         }
+        LogUtil.e(TAG, "showUserExist");
 
     }
 
@@ -200,27 +225,13 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
 
     private void resend() {
         mPhoneTv.setText(String.format(getContext().getString(R.string.sending), mPhone));
+        LogUtil.e(TAG, "resend");
     }
 
     @Override
     public void onComplete(String code) {
         mPresenter.requestCheckSmsCode(mPhone, code);
+        LogUtil.e(TAG, "onComplete");
     }
 
-    private CountDownTimer mCountDownTimer = new CountDownTimer(60000, 1000) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-            mBtnResend.setEnabled(false);
-            mBtnResend.setText(String.format(getContext()
-                    .getString(R.string.after_time_resend,
-                            millisUntilFinished / 1000)));
-        }
-
-        @Override
-        public void onFinish() {
-            mBtnResend.setEnabled(true);
-            mBtnResend.setText(getContext().getString(R.string.resend));
-            cancel();
-        }
-    };
 }

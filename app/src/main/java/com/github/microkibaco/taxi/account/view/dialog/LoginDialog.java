@@ -18,6 +18,7 @@ import com.github.microkibaco.taxi.account.presenter.ILoginDialogPresenter;
 import com.github.microkibaco.taxi.account.presenter.impl.LoginDialogPresenterImpl;
 import com.github.microkibaco.taxi.account.view.ILoginView;
 import com.github.microkibaco.taxi.common.databus.RxBus;
+import com.github.microkibaco.taxi.common.util.LogUtil;
 import com.github.microkibaco.taxi.common.util.ToastUtil;
 import com.github.microkibaco.taxi.main.view.MainActivity;
 
@@ -77,6 +78,7 @@ public class LoginDialog extends Dialog implements ILoginView,
         ToastUtil.show(getContext(), getContext().getString(R.string.login_suc));
         mainActivity.showLoginSuc();
         LoginDialog.this.dismiss();
+        LogUtil.e(TAG, "showLoginSuc: 处理登录成功UI");
     }
 
     @Override
@@ -97,6 +99,7 @@ public class LoginDialog extends Dialog implements ILoginView,
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        LogUtil.e(TAG, "onDetachedFromWindow");
     }
 
     @Override
@@ -157,6 +160,7 @@ public class LoginDialog extends Dialog implements ILoginView,
         ToastUtil.show(getContext(), getContext().getString(R.string.login_suc));
         mainActivity.showLoginSuc();
         LoginDialog.this.dismiss();
+        LogUtil.e(TAG, "showServerError: 显示服服务器出错");
     }
 
     /**
@@ -167,6 +171,7 @@ public class LoginDialog extends Dialog implements ILoginView,
         mErrorTips.setVisibility(View.VISIBLE);
         mErrorTips.setTextColor(getContext().getResources().getColor(R.color.error_red));
         mErrorTips.setText(getContext().getString(R.string.password_error));
+        LogUtil.e(TAG, "showPasswordError: " + getContext().getString(R.string.password_error));
     }
 
 
@@ -178,6 +183,8 @@ public class LoginDialog extends Dialog implements ILoginView,
             mLoading.setVisibility(View.GONE);
             mBtnConfirm.setVisibility(View.VISIBLE);
         }
+
+        LogUtil.e(TAG, "showOrHideLoading: " + show);
     }
 
 
@@ -188,6 +195,7 @@ public class LoginDialog extends Dialog implements ILoginView,
         final String password = mConfirmPw.getText().toString();
         //  网络请求登录
         mPresenter.requestLogin(mPhoneStr, password);
+        LogUtil.e(TAG, "submit: " + password);
     }
 
 

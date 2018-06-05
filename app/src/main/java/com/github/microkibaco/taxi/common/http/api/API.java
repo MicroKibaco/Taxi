@@ -7,7 +7,7 @@ public class API {
 
     public static final String TEST_GET = "/get?uid=${uid}";
     public static final String TEST_POST = "/post";
-    private static final String KEY = "/f34e28da5816433d/";
+    private static final String KEY = "f34e28da5816433d/";
 
     // 获取验证码
     public static final String GET_SMS_CODE = KEY +

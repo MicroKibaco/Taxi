@@ -26,7 +26,7 @@ import com.github.microkibaco.taxi.common.util.LogUtil;
 import rx.functions.Func1;
 
 public class AccountManagerImpl implements IAccountManager {
-    private static final String TAG = IAccountManager.class.getSimpleName();
+    private static final String TAG = AccountManagerImpl.class.getSimpleName();
     private static final String FLAG_PHONE = "phone";
     private static final String FLAG_CODE = "code";
     private static final String FLAG_PASSWORD = "password";
