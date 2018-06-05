@@ -64,5 +64,6 @@
     <string name="paying">支付中...</string>
     <string name="pay_fail">支付失败</string>
     <string name="_86">+86</string>
+    <string name="tip_check_pwd">密码输入不一致,请重新输入~</string>
 
 </resources>

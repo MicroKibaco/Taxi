@@ -44,7 +44,7 @@ public class CreatePasswordDialog extends Dialog implements ICreatePasswordDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(TaxiApplication.getInstance()
-                .getInflateLayoutRoot(getContext(),R.layout.dialog_create_pw,
+                .getInflateLayoutRoot(getContext(), R.layout.dialog_create_pw,
                         null));
         initView();
         initListener();
@@ -102,6 +102,8 @@ public class CreatePasswordDialog extends Dialog implements ICreatePasswordDialo
         final boolean checkPw = mPresenter.checkPw(password, confirmPassword);
         if (checkPw) {
             mPresenter.requestRegister(mPhoneStr, confirmPassword);
+        } else {
+            ToastUtil.show(mContext, getContext().getString(R.string.tip_check_pwd));
         }
     }
 

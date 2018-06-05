@@ -77,6 +77,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView,
                         null));
         initView();
         initListener();
+        requestSendSmsCode();
 
 
     }
@@ -151,6 +152,14 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView,
 
 
         }
+    }
+
+    /**
+     * 请求下发验证码
+     */
+    private void requestSendSmsCode() {
+
+        mPresenter.requestSendSmsCode(mPhone);
     }
 
     @Override
