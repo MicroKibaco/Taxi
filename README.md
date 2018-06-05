@@ -533,6 +533,28 @@ SVG 有何优点?
 
 - A = elliptical Arc(A RX, RY, XROTATION, FLAG1, FLAG2,X,Y) : 弧线
 
+```xml
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="50dp"
+        android:height="72dp"
+        android:viewportWidth="50.0"
+        android:viewportHeight="72.0">
+    <path
+        android:name="logo"
+        android:strokeColor="@color/logoColor"
+        android:strokeWidth="10"
+        android:pathData="M5,10,v50,L20,60,A1,1,0,0,0,20,15,L0,15"/>
+</vector>
+```
+
+ ```java
+  final AnimatedVectorDrawable anim = (AnimatedVectorDrawable) getResources()
+                    .getDrawable(R.drawable.anim);
+            mLogo.setImageDrawable(anim);
+            anim.start();
+ ```
+
+ <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/splash.png" width="736" height="1334" />
 
 
 ## 章节二: OKHttp3 的使用
@@ -558,14 +580,14 @@ SVG 有何优点?
  
  - 怎么做封装?
  
- <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/baseOkHttp.png" width="600" height="300" />
+ <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/baseOkHttp.png" width="1000" height="300" />
 
 - Http 协议
 - OKHttp 的优点与用法
 - 封装一个App 网络库的方法(分层思想)
 
 ## 章节四: 用户登录模块
- <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/login.png" width="300" height="600" />
+ <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/login.png" width="736" height="1334" />
 
  
 - 定义 MVP 各层接口
@@ -573,6 +595,6 @@ SVG 有何优点?
 - 整理 View 层,形成被动视图, 实现 P 层
 
 ### MVC , MVP ,MVVM 架构对比
- <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/mvc-mvp-mvvm.png" width="600" height="300" />
+ <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/mvc-mvp-mvvm.png" width="1000" height="300" />
 
 
