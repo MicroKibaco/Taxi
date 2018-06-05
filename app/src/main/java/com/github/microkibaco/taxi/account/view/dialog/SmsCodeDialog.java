@@ -2,30 +2,25 @@ package com.github.microkibaco.taxi.account.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.dalimao.corelibrary.VerificationCodeInput;
 import com.github.microkibaco.taxi.R;
 import com.github.microkibaco.taxi.TaxiApplication;
-import com.github.microkibaco.taxi.account.model.AccountManagerImpl;
 import com.github.microkibaco.taxi.account.model.IAccountManager;
 import com.github.microkibaco.taxi.account.presenter.ISmsCodeDialogPresenter;
 import com.github.microkibaco.taxi.account.presenter.impl.SmsCodeDialogPresenterImpl;
 import com.github.microkibaco.taxi.account.view.ISmsCodeDialogView;
 import com.github.microkibaco.taxi.common.databus.RxBus;
-import com.github.microkibaco.taxi.common.http.IHttpClient;
-import com.github.microkibaco.taxi.common.http.impl.OkHttpClientImpl;
-import com.github.microkibaco.taxi.common.storage.SharedPreferencesDao;
 import com.github.microkibaco.taxi.common.util.ToastUtil;
 import com.github.microkibaco.taxi.main.view.MainActivity;
 
@@ -48,12 +43,8 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
         this(context, R.style.Dialog);
         // 上一个界面传来的手机号码
         this.mPhone = phone;
-        final IHttpClient httpClient = new OkHttpClientImpl();
-        final SharedPreferencesDao dao =
-                new SharedPreferencesDao(TaxiApplication.getInstance(),
-                        SharedPreferencesDao.FILE_ACCOUNT);
-        final AccountManagerImpl iAccountManager = new AccountManagerImpl(httpClient, dao);
-        mPresenter = new SmsCodeDialogPresenterImpl(this, iAccountManager);
+        mPresenter = new SmsCodeDialogPresenterImpl(this,
+                TaxiApplication.getInstance().getAccountManager());
         this.mainActivity = context;
 
     }
@@ -61,10 +52,9 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final LayoutInflater inflater =
-                (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View root = inflater.inflate(R.layout.dialog_smscode_input, null);
-        setContentView(root);
+        setContentView(TaxiApplication.getInstance()
+                .getInflateLayoutRoot(getContext(), R.layout.dialog_smscode_input,
+                        null));
         initView();
         initListener();
 
@@ -101,21 +91,14 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
         mVerificationCodeInput = (VerificationCodeInput) findViewById(R.id.verificationCodeInput);
         mLoading = (ContentLoadingProgressBar) findViewById(R.id.loading);
         mError = (AppCompatTextView) findViewById(R.id.error);
+        mClose = (AppCompatImageView) findViewById(R.id.close);
         mError.setVisibility(View.GONE);
         mPhoneTv.setText(String.format(getContext().getString(R.string.sending), mPhone));
-        mClose = (AppCompatImageView) findViewById(R.id.close);
     }
 
-    public SmsCodeDialog(@NonNull Context context) {
-        super(context);
-    }
 
     private SmsCodeDialog(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
-    }
-
-    protected SmsCodeDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
     }
 
     @Override
@@ -174,12 +157,30 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
     public void showUserExist(boolean exist) {
         mLoading.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
-        dismiss();
-        if (exist){
-            // todo: 用户存在, 进入登录
+        SmsCodeDialog.this.dismiss();
+        if (exist) {
+            // 用户存在, 进入登录
+            final LoginDialog dialog =
+                    new LoginDialog(mainActivity, mPhone);
+            dialog.show();
+            dialog.setOnDismissListener(new OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    SmsCodeDialog.this.dismiss();
+                }
+            });
 
-        }else {
-            // todo: 用户不存在, 进入注册页面
+        } else {
+            // 用户不存在,进入注册
+            final CreatePasswordDialog dialog =
+                    new CreatePasswordDialog(mainActivity, mPhone);
+            dialog.show();
+            dialog.setOnDismissListener(new OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    SmsCodeDialog.this.dismiss();
+                }
+            });
         }
 
     }
@@ -188,7 +189,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.close:
-                dismiss();
+                SmsCodeDialog.this.dismiss();
                 break;
 
             case R.id.btn_resend:

@@ -23,7 +23,7 @@ public class DevUtil {
         try {
             tm.getDeviceId();
         } catch (Exception e) {
-            LogUtil.d("UUID", e.getMessage());
+            LogUtil.e("UUID", e.getMessage());
         }
         return deviceId + System.currentTimeMillis();
     }

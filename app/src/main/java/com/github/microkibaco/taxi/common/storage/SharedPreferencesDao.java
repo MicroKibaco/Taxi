@@ -5,7 +5,8 @@ import com.google.gson.Gson;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+
+import com.github.microkibaco.taxi.common.util.LogUtil;
 
 /**
  * ShraredPreference 数据访问对象
@@ -66,7 +67,7 @@ public class SharedPreferencesDao {
                 return o;
             }
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            LogUtil.e(TAG, e.getMessage());
         }
         return null;
     }

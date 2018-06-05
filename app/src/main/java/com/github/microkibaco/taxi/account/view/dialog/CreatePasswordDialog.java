@@ -11,19 +11,15 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.github.microkibaco.taxi.R;
 import com.github.microkibaco.taxi.TaxiApplication;
-import com.github.microkibaco.taxi.account.model.AccountManagerImpl;
+import com.github.microkibaco.taxi.account.model.IAccountManager;
 import com.github.microkibaco.taxi.account.presenter.ICreatePasswordDialogPresenter;
 import com.github.microkibaco.taxi.account.presenter.impl.CreatePasswordDialogPresenterImpl;
 import com.github.microkibaco.taxi.account.view.ICreatePasswordDialogView;
 import com.github.microkibaco.taxi.common.databus.RxBus;
-import com.github.microkibaco.taxi.common.http.IHttpClient;
-import com.github.microkibaco.taxi.common.http.impl.OkHttpClientImpl;
-import com.github.microkibaco.taxi.common.storage.SharedPreferencesDao;
 import com.github.microkibaco.taxi.common.util.ToastUtil;
 import com.github.microkibaco.taxi.main.view.MainActivity;
 
@@ -40,18 +36,16 @@ public class CreatePasswordDialog extends Dialog implements ICreatePasswordDialo
     private AppCompatTextView mErrorTips;
     private AppCompatImageView mClose;
 
-    private Context mContext;
+    private Activity mContext;
     private String mPhoneStr;
     private ICreatePasswordDialogPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final LayoutInflater inflater =
-                (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View root = inflater.inflate(R.layout.dialog_create_pw, null);
-        setContentView(root);
-
+        setContentView(TaxiApplication.getInstance()
+                .getInflateLayoutRoot(getContext(),R.layout.dialog_create_pw,
+                        null));
         initView();
         initListener();
 
@@ -64,12 +58,8 @@ public class CreatePasswordDialog extends Dialog implements ICreatePasswordDialo
         // 上一个页面传来的机号码
         this.mContext = context;
         this.mPhoneStr = phone;
-        final IHttpClient httpClient = new OkHttpClientImpl();
-        final SharedPreferencesDao dao =
-                new SharedPreferencesDao(TaxiApplication.getInstance(),
-                        SharedPreferencesDao.FILE_ACCOUNT);
-        final AccountManagerImpl manager = new AccountManagerImpl(httpClient, dao);
-        mPresenter = new CreatePasswordDialogPresenterImpl(this, manager);
+        mPresenter = new CreatePasswordDialogPresenterImpl(this,
+                TaxiApplication.getInstance().getAccountManager());
     }
 
     public CreatePasswordDialog(@NonNull Context context, @StyleRes int themeResId) {
@@ -93,6 +83,16 @@ public class CreatePasswordDialog extends Dialog implements ICreatePasswordDialo
         mPhone.setText(mPhoneStr);
     }
 
+    private void showOrHideLoading(boolean show) {
+        if (show) {
+            mLoading.setVisibility(View.VISIBLE);
+            mBtnConfirm.setVisibility(View.GONE);
+        } else {
+            mLoading.setVisibility(View.GONE);
+            mBtnConfirm.setVisibility(View.VISIBLE);
+        }
+    }
+
     /**
      * 提交注册
      */
@@ -107,12 +107,31 @@ public class CreatePasswordDialog extends Dialog implements ICreatePasswordDialo
 
     @Override
     public void showLoading() {
-
+        showOrHideLoading(true);
     }
 
     @Override
     public void showError(int Code, String msg) {
+        showOrHideLoading(false);
+        switch (Code) {
+            case IAccountManager.PW_ERROR:
+                showLoginFail(msg);
+                break;
+            case IAccountManager.SERVER_FAIL:
+                showServerError(msg);
+                break;
+        }
+    }
 
+    private void showLoginFail(String msg) {
+        dismiss();
+        ToastUtil.show(getContext(), msg);
+    }
+
+    private void showServerError(String msg) {
+        mErrorTips.setTextColor(getContext()
+                .getResources().getColor(R.color.error_red));
+        mErrorTips.setText(msg);
     }
 
     @Override
@@ -157,7 +176,11 @@ public class CreatePasswordDialog extends Dialog implements ICreatePasswordDialo
 
     @Override
     public void showPasswordNotEqual() {
-
+        mErrorTips.setVisibility(View.VISIBLE);
+        mErrorTips.setText(getContext()
+                .getString(R.string.password_is_not_equal));
+        mErrorTips.setTextColor(getContext()
+                .getResources().getColor(R.color.error_red));
     }
 
     @Override

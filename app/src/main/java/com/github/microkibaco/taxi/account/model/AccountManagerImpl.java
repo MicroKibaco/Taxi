@@ -55,9 +55,9 @@ public class AccountManagerImpl implements IAccountManager {
                 final IRequest request = new BaseRequest(url);
                 request.setBody(FLAG_PHONE, phone);
                 final IResponse response = mIHttpClient.get(request, false);
-                LogUtil.d(TAG, response.getData());
+                LogUtil.e(TAG, response.getData());
                 final SmsCodeResponse smsResponse = new SmsCodeResponse();
-                LogUtil.d(TAG, response.getData());
+                LogUtil.e(TAG, response.getData());
                 if (response.getCode() == BaseResponse.STATE_OK) {
                     final BaseBizResponse bizRes =
                             new Gson().fromJson(response.getData(), BaseBizResponse.class);
@@ -89,7 +89,7 @@ public class AccountManagerImpl implements IAccountManager {
                 request.setBody(FLAG_PHONE, phone);
                 request.setBody(FLAG_CODE, smsCode);
                 final IResponse response = mIHttpClient.get(request, false);
-                Log.d(TAG, response.getData());
+                LogUtil.e(TAG, response.getData());
                 final SmsCodeResponse codeResponse = new SmsCodeResponse();
 
                 if (response.getCode() == BaseResponse.STATE_OK) {
@@ -158,7 +158,7 @@ public class AccountManagerImpl implements IAccountManager {
                 request.setBody(FLAG_UID, DevUtil.UUID(TaxiApplication.getInstance()));
 
                 final IResponse response = mIHttpClient.post(request, false);
-                Log.d(TAG, response.getData());
+                LogUtil.e(TAG, response.getData());
                 final RegisterResponse registerResponse = new RegisterResponse();
 
                 if (response.getCode() == BaseBizResponse.STATE_OK) {
@@ -190,7 +190,7 @@ public class AccountManagerImpl implements IAccountManager {
                 request.setBody(FLAG_PASSWORD, password);
 
                 final IResponse response = mIHttpClient.post(request, false);
-                Log.d(TAG, response.getData());
+                LogUtil.e(TAG, response.getData());
 
                 LoginResponse bizRes = new LoginResponse();
 
@@ -252,7 +252,7 @@ public class AccountManagerImpl implements IAccountManager {
                 final IRequest request = new BaseRequest(url);
                 request.setBody(FLAG_TOKEN, account.getToken());
                 final IResponse response = mIHttpClient.post(request, false);
-                Log.d(TAG, response.getData());
+                LogUtil.e(TAG, response.getData());
 
 
                 if (response.getCode() == BaseResponse.STATE_OK) {

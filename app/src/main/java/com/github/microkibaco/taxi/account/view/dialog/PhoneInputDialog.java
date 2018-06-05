@@ -4,26 +4,30 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
-import com.github.microkibaco.taxi.main.view.MainActivity;
 import com.github.microkibaco.taxi.R;
+import com.github.microkibaco.taxi.TaxiApplication;
 import com.github.microkibaco.taxi.common.util.FormatUtil;
+import com.github.microkibaco.taxi.main.view.MainActivity;
+
+import static com.github.microkibaco.taxi.R.id.btn_next;
 
 /**
  * 手机输入对话框
  */
 
-public class PhoneInputDialog extends Dialog {
+public class PhoneInputDialog extends Dialog implements View.OnClickListener,
+        TextWatcher, DialogInterface.OnDismissListener {
 
-    private View mRoot;
-    private EditText mPhone;
-    private Button mButton;
+    private AppCompatEditText mPhone;
+    private AppCompatButton mButton;
+    private AppCompatImageView mClose;
     private MainActivity mainActivity;
 
     public PhoneInputDialog(MainActivity mainActivity) {
@@ -39,68 +43,70 @@ public class PhoneInputDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LayoutInflater inflater = (LayoutInflater) getContext()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mRoot = inflater.inflate(R.layout.dialog_phone_input, null);
-        setContentView(mRoot);
+        setContentView(TaxiApplication.getInstance()
+                .getInflateLayoutRoot(getContext(), R.layout.dialog_phone_input,
+                        null));
+        initView();
         initListener();
+    }
+
+    private void initView() {
+        mButton = (AppCompatButton) findViewById(btn_next);
+        mPhone = (AppCompatEditText) findViewById(R.id.phone);
+        mClose = (AppCompatImageView) findViewById(R.id.close);
+        mButton.setEnabled(false);
     }
 
     private void initListener() {
 
-        mButton = (Button) findViewById(R.id.btn_next);
-        mButton.setEnabled(false);
-        mPhone = (EditText) findViewById(R.id.phone);
         //  手机号输入框组册监听检查手机号输入是否合法
-        mPhone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        mPhone.addTextChangedListener(this);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                check();
-            }
-        });
         // 按钮注册监听
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String phone = mPhone.getText().toString();
-                SmsCodeDialog dialog = new SmsCodeDialog(mainActivity, phone);
-                dialog.show();
-                dialog.setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        PhoneInputDialog.this.dismiss();
-                    }
-                });
-
-            }
-        });
-
+        mButton.setOnClickListener(this);
 
         // 关闭按钮注册监听事件
-
-        findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PhoneInputDialog.this.dismiss();
-            }
-        });
+        mClose.setOnClickListener(this);
     }
 
     private void check() {
-        String phone = mPhone.getText().toString();
-        boolean legal = FormatUtil.checkMobile(phone);
+        final String phone = mPhone.getText().toString();
+        final boolean legal = FormatUtil.checkMobile(phone);
         mButton.setEnabled(legal);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.close:
+                PhoneInputDialog.this.dismiss();
+                break;
+            case btn_next:
+                final String phone = mPhone.getText().toString();
+                final SmsCodeDialog dialog = new SmsCodeDialog(mainActivity, phone);
+                dialog.show();
+                dialog.setOnDismissListener(this);
+                break;
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        check();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        PhoneInputDialog.this.dismiss();
+    }
 }
