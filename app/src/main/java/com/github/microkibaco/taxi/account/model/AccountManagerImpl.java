@@ -124,7 +124,7 @@ public class AccountManagerImpl implements IAccountManager {
                 Log.d(TAG, response.getData());
                 final UserExistResponse existResponse = new UserExistResponse();
                 if (response.getCode() == BaseBizResponse.STATE_OK) {
-                    BaseBizResponse bizRes =
+                    final BaseBizResponse bizRes =
                             new Gson().fromJson(response.getData(),
                                     BaseBizResponse.class);
 
@@ -152,7 +152,7 @@ public class AccountManagerImpl implements IAccountManager {
             @Override
             public Object call(Object o) {
                 final String url = API.Config.getDomain() + API.REGISTER;
-                IRequest request = new BaseRequest(url);
+                final IRequest request = new BaseRequest(url);
                 request.setBody(FLAG_PHONE, phone);
                 request.setBody(FLAG_PASSWORD, password);
                 request.setBody(FLAG_UID, DevUtil.UUID(TaxiApplication.getInstance()));
@@ -162,7 +162,7 @@ public class AccountManagerImpl implements IAccountManager {
                 final RegisterResponse registerResponse = new RegisterResponse();
 
                 if (response.getCode() == BaseBizResponse.STATE_OK) {
-                    BaseBizResponse bizRes =
+                    final BaseBizResponse bizRes =
                             new Gson().fromJson(response.getData(),
                                     BaseBizResponse.class);
                     if (bizRes.getCode() == BaseBizResponse.STATE_OK) {
@@ -241,7 +241,7 @@ public class AccountManagerImpl implements IAccountManager {
                     }
                 }
 
-                LoginResponse loginResponse = new LoginResponse();
+                final LoginResponse loginResponse = new LoginResponse();
                 if (!tokenValid) {
                     loginResponse.setCode(TOKEN_INVALID);
                     return loginResponse;
@@ -250,6 +250,7 @@ public class AccountManagerImpl implements IAccountManager {
                 // 请求网络完成自动登录
                 final String url = API.Config.getDomain() + API.LOGIN_BY_TOKEN;
                 final IRequest request = new BaseRequest(url);
+                request.setBody(FLAG_TOKEN, account.getToken());
                 final IResponse response = mIHttpClient.post(request, false);
                 Log.d(TAG, response.getData());
 

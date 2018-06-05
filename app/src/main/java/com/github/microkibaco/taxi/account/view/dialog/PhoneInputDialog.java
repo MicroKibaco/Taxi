@@ -1,4 +1,4 @@
-package com.github.microkibaco.taxi.account.view;
+package com.github.microkibaco.taxi.account.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

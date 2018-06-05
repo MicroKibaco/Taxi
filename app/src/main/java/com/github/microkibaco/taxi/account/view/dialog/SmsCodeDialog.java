@@ -1,4 +1,4 @@
-package com.github.microkibaco.taxi.account.view;
+package com.github.microkibaco.taxi.account.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -18,12 +18,15 @@ import com.dalimao.corelibrary.VerificationCodeInput;
 import com.github.microkibaco.taxi.R;
 import com.github.microkibaco.taxi.TaxiApplication;
 import com.github.microkibaco.taxi.account.model.AccountManagerImpl;
+import com.github.microkibaco.taxi.account.model.IAccountManager;
 import com.github.microkibaco.taxi.account.presenter.ISmsCodeDialogPresenter;
 import com.github.microkibaco.taxi.account.presenter.SmsCodeDialogPresenterImpl;
+import com.github.microkibaco.taxi.account.view.ISmsCodeDialogView;
 import com.github.microkibaco.taxi.common.databus.RxBus;
 import com.github.microkibaco.taxi.common.http.IHttpClient;
 import com.github.microkibaco.taxi.common.http.impl.OkHttpClientImpl;
 import com.github.microkibaco.taxi.common.storage.SharedPreferencesDao;
+import com.github.microkibaco.taxi.common.util.ToastUtil;
 import com.github.microkibaco.taxi.main.MainActivity;
 
 
@@ -32,7 +35,6 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
 
     private String mPhone;
     private AppCompatImageView mClose;
-    private AppCompatTextView mDialogTitle;
     private AppCompatTextView mPhoneTv;
     private AppCompatButton mBtnResend;
     private VerificationCodeInput mVerificationCodeInput;
@@ -118,12 +120,32 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
 
     @Override
     public void showLoading() {
-
+        mLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showError(int Code, String msg) {
+        mLoading.setVisibility(View.GONE);
+        switch (Code) {
 
+            case IAccountManager.SMS_SEND_FAIL:
+                ToastUtil.show(getContext(),
+                        getContext().getString(R.string.sms_send_fail));
+                break;
+
+            case IAccountManager.SMS_CHECK_FAIL:
+                // 提示验证码错误
+                mError.setVisibility(View.VISIBLE);
+                mVerificationCodeInput.setEnabled(true);
+                break;
+
+            case IAccountManager.SERVER_FAIL:
+                ToastUtil.show(getContext(),
+                        getContext().getString(R.string.error_server));
+                break;
+
+
+        }
     }
 
     @Override
@@ -135,12 +157,30 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
     }
 
     @Override
-    public void showSmsCodeCheckState(boolean b) {
-
+    public void showSmsCodeCheckState(boolean suc) {
+        if (suc) {
+            mError.setVisibility(View.GONE);
+            mLoading.setVisibility(View.VISIBLE);
+            mPresenter.requestCheckUserExit(mPhone);
+        } else {
+            // 提示验证码错误
+            mError.setVisibility(View.VISIBLE);
+            mVerificationCodeInput.setEnabled(true);
+            mLoading.setVisibility(View.GONE);
+        }
     }
 
     @Override
-    public void showUserExist(boolean b) {
+    public void showUserExist(boolean exist) {
+        mLoading.setVisibility(View.GONE);
+        mError.setVisibility(View.GONE);
+        dismiss();
+        if (exist){
+            // todo: 用户存在, 进入登录
+
+        }else {
+            // todo: 用户不存在, 进入注册页面
+        }
 
     }
 
@@ -158,12 +198,12 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.On
     }
 
     private void resend() {
-
+        mPhoneTv.setText(String.format(getContext().getString(R.string.sending), mPhone));
     }
 
     @Override
-    public void onComplete(String s) {
-
+    public void onComplete(String code) {
+        mPresenter.requestCheckSmsCode(mPhone, code);
     }
 
     private CountDownTimer mCountDownTimer = new CountDownTimer(60000, 1000) {

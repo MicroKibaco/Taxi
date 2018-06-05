@@ -9,10 +9,10 @@ public interface ISmsCodeDialogView extends IView {
     /**
      * 显示验证状态
      */
-    void showSmsCodeCheckState(boolean b);
+    void showSmsCodeCheckState(boolean suc);
 
     /**
      * 用户是否存在
      */
-    void showUserExist(boolean b);
+    void showUserExist(boolean exist);
 }

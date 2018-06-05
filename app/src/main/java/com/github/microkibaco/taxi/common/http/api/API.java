@@ -21,7 +21,7 @@ public class API {
     public static final String LOGIN = KEY + "auth";
     // token 登录
     public static final String LOGIN_BY_TOKEN = KEY + "login";
-    //获取附近司机
+    // 获取附近司机
     public static final String GET_NEAR_DRIVERS = KEY + "getNearDrivers?latitude=${latitude}&longitude=${longitude}";
     // 上报当前位置
     public static final String UPLOAD_LOCATION = KEY + "updateUserLocation";
