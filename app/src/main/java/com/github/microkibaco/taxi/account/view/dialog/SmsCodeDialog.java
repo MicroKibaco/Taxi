@@ -20,14 +20,14 @@ import com.github.microkibaco.taxi.TaxiApplication;
 import com.github.microkibaco.taxi.account.model.AccountManagerImpl;
 import com.github.microkibaco.taxi.account.model.IAccountManager;
 import com.github.microkibaco.taxi.account.presenter.ISmsCodeDialogPresenter;
-import com.github.microkibaco.taxi.account.presenter.SmsCodeDialogPresenterImpl;
+import com.github.microkibaco.taxi.account.presenter.impl.SmsCodeDialogPresenterImpl;
 import com.github.microkibaco.taxi.account.view.ISmsCodeDialogView;
 import com.github.microkibaco.taxi.common.databus.RxBus;
 import com.github.microkibaco.taxi.common.http.IHttpClient;
 import com.github.microkibaco.taxi.common.http.impl.OkHttpClientImpl;
 import com.github.microkibaco.taxi.common.storage.SharedPreferencesDao;
 import com.github.microkibaco.taxi.common.util.ToastUtil;
-import com.github.microkibaco.taxi.main.MainActivity;
+import com.github.microkibaco.taxi.main.view.MainActivity;
 
 
 public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView, View.OnClickListener, VerificationCodeInput.Listener {

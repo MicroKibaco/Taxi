@@ -1,8 +1,9 @@
-package com.github.microkibaco.taxi.account.presenter;
+package com.github.microkibaco.taxi.account.presenter.impl;
 
 
 import com.github.microkibaco.taxi.account.model.IAccountManager;
 import com.github.microkibaco.taxi.account.model.response.LoginResponse;
+import com.github.microkibaco.taxi.account.presenter.ILoginDialogPresenter;
 import com.github.microkibaco.taxi.account.view.ILoginView;
 import com.github.microkibaco.taxi.common.databus.RegisterBus;
 

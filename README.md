@@ -554,7 +554,7 @@ SVG 有何优点?
             anim.start();
  ```
 
- <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/splash.png" width="736" height="1334" />
+ <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/splash.png" width="368" height="667" />
 
 
 ## 章节二: OKHttp3 的使用

@@ -9,7 +9,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 
-import com.github.microkibaco.taxi.main.MainActivity;
+import com.github.microkibaco.taxi.main.view.MainActivity;
 import com.github.microkibaco.taxi.R;
 
 import butterknife.Bind;

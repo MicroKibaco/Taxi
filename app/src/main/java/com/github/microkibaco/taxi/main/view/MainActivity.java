@@ -1,4 +1,4 @@
-package com.github.microkibaco.taxi.main;
+package com.github.microkibaco.taxi.main.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.github.microkibaco.taxi.R;
 import com.github.microkibaco.taxi.account.view.dialog.PhoneInputDialog;
+import com.github.microkibaco.taxi.common.util.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,7 +26,8 @@ import butterknife.OnClick;
  * 3. 登录之前先校验手机号码
  * 4. todo: 地图初始化
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        IMainView {
 
     @Bind(R.id.map_container)
     ContentFrameLayout mMapContainer;
@@ -57,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutCompat mSelectArea;
     @Bind(R.id.activity_main)
     RelativeLayout mActivityMain;
+
+    //  当前是否登录
+    private boolean mIsLogin;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,4 +120,22 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showError(int Code, String msg) {
+
+    }
+
+    @Override
+    public void showLoginSuc() {
+        ToastUtil.show(this, getString(R.string.login_suc));
+        this.mIsLogin = true;
+    }
+
+
 }

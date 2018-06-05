@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.github.microkibaco.taxi.main.MainActivity;
+import com.github.microkibaco.taxi.main.view.MainActivity;
 import com.github.microkibaco.taxi.R;
 import com.github.microkibaco.taxi.common.util.FormatUtil;
 
