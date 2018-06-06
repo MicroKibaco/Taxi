@@ -93,8 +93,9 @@ public class AccountManagerImpl implements IAccountManager {
                 final SmsCodeResponse codeResponse = new SmsCodeResponse();
 
                 if (response.getCode() == BaseResponse.STATE_OK) {
-                    BaseBizResponse bizRes =
-                            new Gson().fromJson(response.getData(), BaseBizResponse.class);
+                    final BaseBizResponse bizRes =
+                            new Gson().fromJson(response.getData(),
+                                    BaseBizResponse.class);
                     if (bizRes.getCode() == BaseResponse.STATE_OK) {
                         codeResponse.setCode(SMS_CHECK_SUC);
                     } else {
@@ -121,7 +122,7 @@ public class AccountManagerImpl implements IAccountManager {
                 final IRequest request = new BaseRequest(url);
                 request.setBody(FLAG_PHONE, phone);
                 final IResponse response = mIHttpClient.get(request, false);
-                Log.d(TAG, response.getData());
+                Log.e(TAG, response.getData());
                 final UserExistResponse existResponse = new UserExistResponse();
                 if (response.getCode() == BaseBizResponse.STATE_OK) {
                     final BaseBizResponse bizRes =
@@ -158,7 +159,8 @@ public class AccountManagerImpl implements IAccountManager {
                 request.setBody(FLAG_UID, DevUtil.UUID(TaxiApplication.getInstance()));
 
                 final IResponse response = mIHttpClient.post(request, false);
-                LogUtil.e(TAG, response.getData());
+                Log.e(TAG, response.getData());
+
                 final RegisterResponse registerResponse = new RegisterResponse();
 
                 if (response.getCode() == BaseBizResponse.STATE_OK) {

@@ -3,6 +3,7 @@ package com.github.microkibaco.taxi.common.http.impl;
 import com.google.gson.Gson;
 
 import com.github.microkibaco.taxi.common.http.IRequest;
+import com.github.microkibaco.taxi.common.http.api.API;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,16 +18,15 @@ public class BaseRequest implements IRequest {
     private final Map<String, String> header;
     private final Map<String, String> body;
 
-
+    /**
+     * 公共参数及头部信息
+     */
     public BaseRequest(String url) {
-        /**
-         * 公共参数及头部信息
-         */
         this.url = url;
         this.header = new HashMap<>();
         this.body = new HashMap<>();
-        header.put("Application-Id", "myTaxiId");
-        header.put("API-key", "myTaxiKey");
+        header.put("X-Bmob-Application-Id", API.Config.getAppId());
+        header.put("X-Bmob-REST-API-Key", API.Config.getAppKey());
     }
 
     @Override

@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.StyleRes;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.dalimao.corelibrary.VerificationCodeInput;
 import com.github.microkibaco.taxi.R;
@@ -36,7 +36,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView,
     private AppCompatTextView mPhoneTv;
     private AppCompatButton mBtnResend;
     private VerificationCodeInput mVerificationCodeInput;
-    private ContentLoadingProgressBar mLoading;
+    private ProgressBar mLoading;
     private AppCompatTextView mError;
 
     private ISmsCodeDialogPresenter mPresenter;
@@ -111,7 +111,7 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView,
         mPhoneTv = (AppCompatTextView) findViewById(R.id.phone);
         mBtnResend = (AppCompatButton) findViewById(R.id.btn_resend);
         mVerificationCodeInput = (VerificationCodeInput) findViewById(R.id.verificationCodeInput);
-        mLoading = (ContentLoadingProgressBar) findViewById(R.id.loading);
+        mLoading = (ProgressBar) findViewById(R.id.loading);
         mError = (AppCompatTextView) findViewById(R.id.error);
         mClose = (AppCompatImageView) findViewById(R.id.close);
         mError.setVisibility(View.GONE);

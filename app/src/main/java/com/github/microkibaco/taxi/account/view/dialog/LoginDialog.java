@@ -4,12 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.github.microkibaco.taxi.R;
 import com.github.microkibaco.taxi.TaxiApplication;
@@ -30,7 +30,7 @@ public class LoginDialog extends Dialog implements ILoginView,
 
     private static final String TAG = LoginDialog.class.getSimpleName();
 
-    private ContentLoadingProgressBar mLoading;
+    private ProgressBar mLoading;
     private AppCompatTextView mPhone;
     private AppCompatEditText mConfirmPw;
     private AppCompatButton mBtnConfirm;
@@ -136,7 +136,7 @@ public class LoginDialog extends Dialog implements ILoginView,
         mConfirmPw = (AppCompatEditText) findViewById(R.id.password);
         mBtnConfirm = (AppCompatButton) findViewById(R.id.btn_confirm);
         mClose = (AppCompatImageView) findViewById(R.id.close);
-        mLoading = (ContentLoadingProgressBar) findViewById(R.id.loading);
+        mLoading = (ProgressBar) findViewById(R.id.loading);
         mErrorTips = (AppCompatTextView) findViewById(R.id.tips);
 
     }
