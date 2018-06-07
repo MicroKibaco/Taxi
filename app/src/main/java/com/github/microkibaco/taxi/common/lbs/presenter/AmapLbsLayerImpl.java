@@ -56,7 +56,8 @@ import java.util.Map;
  * 高德地图实现基类
  */
 
-public class AmapLbsLayerImpl implements ILbsLayer, LocationSource {
+public class AmapLbsLayerImpl implements ILbsLayer,
+        LocationSource, AMapLocationListener {
 
     private static final String TAG = AmapLbsLayerImpl.class.getSimpleName();
     private static final String KEY_MY_MARKER = "1000";
@@ -355,43 +356,7 @@ public class AmapLbsLayerImpl implements ILbsLayer, LocationSource {
 
     private void setUpLocation() {
         //设置监听器
-
-        mLocationClient.setLocationListener(new AMapLocationListener() {
-            @Override
-            public void onLocationChanged(AMapLocation aMapLocation) {
-                // 定位变化位置
-                if (mLocationChangeListener != null) {
-
-                    // 当前城市
-                    mCity = aMapLocation.getCity();
-                    // 地图已经激活，通知蓝点实时更新
-                    mMapLocationChangeListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-                    LogUtil.e(TAG, "onLocationChanged");
-
-                    final LocationInfo locationInfo = new LocationInfo(aMapLocation.getLatitude(),
-                            aMapLocation.getLongitude());
-                    locationInfo.setName(aMapLocation.getPoiName());
-                    locationInfo.setKey(KEY_MY_MARKER);
-
-                    if (firstLocation) {
-                        firstLocation = false;
-                        moveCameraToPoint(locationInfo, 17);
-
-                        if (mLocationChangeListener != null) {
-
-                            mLocationChangeListener.onLocation(locationInfo);
-                        }
-
-                    }
-
-                    if (mLocationChangeListener != null) {
-
-                        mLocationChangeListener.onLocationChanged(locationInfo);
-                    }
-
-                }
-            }
-        });
+        mLocationClient.setLocationListener(this);
         mLocationClient.startLocation();
     }
 
@@ -476,5 +441,41 @@ public class AmapLbsLayerImpl implements ILbsLayer, LocationSource {
         }
         mLocationClient = null;
 
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+
+        // 定位变化位置
+        if (mLocationChangeListener != null) {
+
+            // 当前城市
+            mCity = aMapLocation.getCity();
+            // 地图已经激活，通知蓝点实时更新
+            mMapLocationChangeListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
+            LogUtil.e(TAG, "onLocationChanged");
+
+            final LocationInfo locationInfo = new LocationInfo(aMapLocation.getLatitude(),
+                    aMapLocation.getLongitude());
+            locationInfo.setName(aMapLocation.getPoiName());
+            locationInfo.setKey(KEY_MY_MARKER);
+
+            if (firstLocation) {
+                firstLocation = false;
+                moveCameraToPoint(locationInfo, 17);
+
+                if (mLocationChangeListener != null) {
+
+                    mLocationChangeListener.onLocation(locationInfo);
+                }
+
+            }
+
+            if (mLocationChangeListener != null) {
+
+                mLocationChangeListener.onLocationChanged(locationInfo);
+            }
+
+        }
     }
 }

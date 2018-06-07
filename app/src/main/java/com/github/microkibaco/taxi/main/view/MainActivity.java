@@ -1,5 +1,6 @@
 package com.github.microkibaco.taxi.main.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +14,11 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.github.microkibaco.taxi.R;
+import com.github.microkibaco.taxi.account.model.IAccountManager;
 import com.github.microkibaco.taxi.account.view.dialog.PhoneInputDialog;
+import com.github.microkibaco.taxi.common.databus.RxBus;
 import com.github.microkibaco.taxi.common.util.ToastUtil;
+import com.github.microkibaco.taxi.main.presenter.IMainPresenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements
 
     //  当前是否登录
     private boolean mIsLogin;
+    private IMainPresenter mPresenter;
 
 
     @Override
@@ -103,6 +108,13 @@ public class MainActivity extends AppCompatActivity implements
     private void showPhoneInputDialog() {
         PhoneInputDialog dialog = new PhoneInputDialog(this);
         dialog.show();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                RxBus.getInstance().register(mPresenter);
+            }
+        });
+        RxBus.getInstance().unRegister(mPresenter);
     }
 
     @OnClick({R.id.start, R.id.end, R.id.btn_call_driver, R.id.btn_cancel, R.id.btn_pay})
@@ -128,7 +140,18 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void showError(int Code, String msg) {
-
+        switch (Code) {
+            case IAccountManager.TOKEN_INVALID:
+                // 登录过期
+                ToastUtil.show(this, getString(R.string.token_invalid));
+                showPhoneInputDialog();
+                mIsLogin = false;
+                break;
+            case IAccountManager.SERVER_FAIL:
+                // 服务器错误
+                showPhoneInputDialog();
+                break;
+        }
     }
 
     @Override
@@ -137,5 +160,9 @@ public class MainActivity extends AppCompatActivity implements
         this.mIsLogin = true;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
