@@ -587,7 +587,7 @@ SVG 有何优点?
 - 封装一个App 网络库的方法(分层思想)
 
 ## 章节四: 用户登录模块
- <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/login.png" width="736" height="1334" />
+ <img src="https://github.com/MicroKibaco/Taxi/blob/master/doc/login.png" width="368" height="667" />
 
  
 - 定义 MVP 各层接口

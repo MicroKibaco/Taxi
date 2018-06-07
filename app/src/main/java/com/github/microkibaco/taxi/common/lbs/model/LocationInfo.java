@@ -10,27 +10,11 @@ public class LocationInfo {
 
     private String name;
 
-    private String latitude;
+    private double latitude;
 
-    private String longitude;
+    private double longitude;
 
     private float rotation;
-
-    @Override
-    public String toString() {
-        return "LocationInfo{" +
-                "key='" + key + '\'' +
-                ", name='" + name + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", rotation=" + rotation +
-                '}';
-    }
-
-    public LocationInfo(String latitude, String longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
 
     public String getKey() {
         return key;
@@ -48,19 +32,19 @@ public class LocationInfo {
         this.name = name;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -71,4 +55,21 @@ public class LocationInfo {
     public void setRotation(float rotation) {
         this.rotation = rotation;
     }
+
+    public LocationInfo(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    @Override
+    public String toString() {
+        return "LocationInfo{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", rotation=" + rotation +
+                '}';
+    }
+
 }
