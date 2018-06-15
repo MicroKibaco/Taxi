@@ -25,7 +25,7 @@ import com.github.microkibaco.taxi.main.view.MainActivity;
 /**
  * 登录框
  */
-public class LoginDialog extends Dialog implements ILoginView,
+class LoginDialog extends Dialog implements ILoginView,
         View.OnClickListener {
 
     private static final String TAG = LoginDialog.class.getSimpleName();
@@ -41,7 +41,7 @@ public class LoginDialog extends Dialog implements ILoginView,
     private ILoginDialogPresenter mPresenter;
     private MainActivity mainActivity;
 
-    public LoginDialog(@NonNull MainActivity context, @NonNull String phone) {
+    LoginDialog(@NonNull MainActivity context, @NonNull String phone) {
         this(context, R.style.Dialog);
         this.mPhoneStr = phone;
         this.mainActivity = context;
@@ -49,7 +49,7 @@ public class LoginDialog extends Dialog implements ILoginView,
                 TaxiApplication.getInstance().getAccountManager());
     }
 
-    public LoginDialog(Context context, int theme) {
+    private LoginDialog(Context context, int theme) {
         super(context, theme);
     }
 

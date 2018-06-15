@@ -94,19 +94,17 @@ public class RxBus {
     private void callMethodByAnnotiation(Object target, Object data) {
         Method[] methodArray = target.getClass().getDeclaredMethods();
 
-        for (int i = 0; i < methodArray.length; i++) {
+        for (Method aMethodArray : methodArray) {
             try {
-                if (methodArray[i].isAnnotationPresent(RegisterBus.class)) {
+                if (aMethodArray.isAnnotationPresent(RegisterBus.class)) {
                     // 被 @RegisterBus 修饰的方法
-                    Class paramType = methodArray[i].getParameterTypes()[0];
+                    Class<?> paramType = aMethodArray.getParameterTypes()[0];
                     if (data.getClass().getName().equals(paramType.getName())) {
                         // 参数类型和 data 一样，调用此方法
-                        methodArray[i].invoke(target, new Object[]{data});
+                        aMethodArray.invoke(target, data);
                     }
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }

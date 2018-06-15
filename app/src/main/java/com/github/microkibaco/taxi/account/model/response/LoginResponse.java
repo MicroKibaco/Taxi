@@ -7,7 +7,7 @@ import com.github.microkibaco.taxi.common.http.biz.BaseBizResponse;
  */
 
 public class LoginResponse extends BaseBizResponse {
-    Account data;
+    private Account data;
 
     public Account getData() {
         return data;

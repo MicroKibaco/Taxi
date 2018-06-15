@@ -38,7 +38,7 @@ public interface IAccountManager {
     // 登录失效
     static final int TOKEN_INVALID = -6;
 
-    /**
+    /*
      * void setHandler(Handler handler);
      */
 

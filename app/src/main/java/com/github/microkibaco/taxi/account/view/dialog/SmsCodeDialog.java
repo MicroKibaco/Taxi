@@ -46,9 +46,9 @@ public class SmsCodeDialog extends Dialog implements ISmsCodeDialogView,
         @Override
         public void onTick(long millisUntilFinished) {
             mBtnResend.setEnabled(false);
-            mBtnResend.setText(String.format(getContext()
+            mBtnResend.setText(getContext()
                     .getString(R.string.after_time_resend,
-                            millisUntilFinished / 1000)));
+                            millisUntilFinished / 1000));
         }
 
         @Override

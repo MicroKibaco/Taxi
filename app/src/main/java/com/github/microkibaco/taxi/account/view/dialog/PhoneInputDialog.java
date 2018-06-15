@@ -35,7 +35,7 @@ public class PhoneInputDialog extends Dialog implements View.OnClickListener,
         this.mainActivity = mainActivity;
     }
 
-    public PhoneInputDialog(Context context, int theme) {
+    private PhoneInputDialog(Context context, int theme) {
         super(context, theme);
 
     }

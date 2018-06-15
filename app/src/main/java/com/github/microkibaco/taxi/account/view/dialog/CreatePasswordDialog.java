@@ -56,7 +56,7 @@ public class CreatePasswordDialog extends Dialog implements ICreatePasswordDialo
     }
 
 
-    public CreatePasswordDialog(@NonNull Activity context, String phone) {
+    CreatePasswordDialog(@NonNull Activity context, String phone) {
         this(context, R.style.Dialog);
         // 上一个页面传来的机号码
         this.mContext = context;
@@ -65,7 +65,7 @@ public class CreatePasswordDialog extends Dialog implements ICreatePasswordDialo
                 TaxiApplication.getInstance().getAccountManager());
     }
 
-    public CreatePasswordDialog(@NonNull Context context, @StyleRes int themeResId) {
+    private CreatePasswordDialog(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
     }
 
