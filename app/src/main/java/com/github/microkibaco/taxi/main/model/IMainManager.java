@@ -2,9 +2,7 @@ package com.github.microkibaco.taxi.main.model;
 
 import com.github.microkibaco.taxi.common.lbs.model.LocationInfo;
 
-/**
- * Created by MicroKibaco on 07/06/2018.
- */
+
 
 public interface IMainManager {
     /**

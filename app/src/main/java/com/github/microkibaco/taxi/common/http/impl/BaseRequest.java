@@ -17,6 +17,8 @@ public class BaseRequest implements IRequest {
     private String url;
     private final Map<String, String> header;
     private final Map<String, String> body;
+    private static final String KEY_APP_ID = "X-Bmob-Application-Id";
+    private static final String KEY_APP_KEY = "X-Bmob-REST-API-Key";
 
     /**
      * 公共参数及头部信息
@@ -25,8 +27,8 @@ public class BaseRequest implements IRequest {
         this.url = url;
         this.header = new HashMap<>();
         this.body = new HashMap<>();
-        header.put("X-Bmob-Application-Id", API.Config.getAppId());
-        header.put("X-Bmob-REST-API-Key", API.Config.getAppKey());
+        header.put(KEY_APP_ID, API.Config.getAppId());
+        header.put(KEY_APP_KEY, API.Config.getAppKey());
     }
 
     @Override
