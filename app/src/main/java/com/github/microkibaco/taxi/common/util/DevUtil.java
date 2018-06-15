@@ -1,5 +1,6 @@
 package com.github.microkibaco.taxi.common.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.telephony.TelephonyManager;
@@ -9,12 +10,14 @@ import android.view.inputmethod.InputMethodManager;
  * 设备相关工具类
  */
 
+@SuppressWarnings("ConstantConditions")
 public class DevUtil {
 
     /**
      * 获取 UID
      */
 
+    @SuppressLint("HardwareIds")
     public static String UUID(Context context) {
 
         TelephonyManager tm = (TelephonyManager) context

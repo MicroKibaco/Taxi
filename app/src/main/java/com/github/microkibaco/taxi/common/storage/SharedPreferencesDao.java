@@ -33,8 +33,8 @@ public class SharedPreferencesDao {
      * 保存 k-v
      */
 
-    public void save(String key, String value) {
-        sharedPreferences.edit().putString(key, value).commit();
+    private void save(String key, String value) {
+        sharedPreferences.edit().putString(key, value).apply();
     }
 
     /**
@@ -63,8 +63,7 @@ public class SharedPreferencesDao {
 
         try {
             if (value != null) {
-                final Object o = new Gson().fromJson(value, cls);
-                return o;
+                return new Gson().fromJson(value, cls);
             }
         } catch (Exception e) {
             LogUtil.e(TAG, e.getMessage());
